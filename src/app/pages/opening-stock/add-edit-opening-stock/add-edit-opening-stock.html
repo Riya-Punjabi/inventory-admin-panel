@@ -132,38 +132,60 @@
 
     <section class="section-panel">
         <h2 class="h6 mb-3">Images and Notes</h2>
-        <div class="form-grid">
+        <div class="image-grid">
             <div class="image-field">
                 <label class="form-label" for="product_img">Product Image</label>
-                @if(productImagePreview){
-                <img class="image-preview" [src]="productImagePreview" alt="Product image preview" />
-                }
-                <input id="product_img" class="form-control" type="file" accept="image/*"
-                    (change)="handleFile($event, 'product_img', 'product_imgBase64')" />
-
-                @if(form.value.product_img){
-                <small class="text-primary d-block mt-2">
-                    Current File: {{ form.value.product_img }}
-                </small>
-                }
+                <div class="image-preview-shell">
+                    @if(productImagePreview){
+                    <img class="image-preview" [src]="productImagePreview" alt="Product image preview" />
+                    } @else {
+                    <div class="image-empty">
+                        <i class="pi pi-image"></i>
+                        <span>No product image</span>
+                    </div>
+                    }
+                </div>
+                <div class="file-control">
+                    <input id="product_img" class="file-input" type="file" accept="image/*"
+                        (change)="handleFile($event, 'product_img', 'product_imgBase64')" />
+                    <label class="file-trigger" for="product_img">
+                        <i class="pi pi-upload"></i>
+                        Choose image
+                    </label>
+                    <span class="file-name">
+                        {{ form.value.product_img || 'No file selected' }}
+                    </span>
+                </div>
+             
             </div>
 
             <div class="image-field">
                 <label class="form-label" for="purchase_img">Purchase Image</label>
-                @if(purchaseImagePreview){
-                <img class="image-preview" [src]="purchaseImagePreview" alt="Purchase image preview" />
-                }
-                <input id="purchase_img" class="form-control" type="file" accept="image/*"
-                    (change)="handleFile($event, 'purchase_img', 'purchase_imgBase64')" />
+                <div class="image-preview-shell">
+                    @if(purchaseImagePreview){
+                    <img class="image-preview" [src]="purchaseImagePreview" alt="Purchase image preview" />
+                    } @else {
+                    <div class="image-empty">
+                        <i class="pi pi-image"></i>
+                        <span>No purchase image</span>
+                    </div>
+                    }
+                </div>
+                <div class="file-control">
+                    <input id="purchase_img" class="file-input" type="file" accept="image/*"
+                        (change)="handleFile($event, 'purchase_img', 'purchase_imgBase64')" />
+                    <label class="file-trigger" for="purchase_img">
+                        <i class="pi pi-upload"></i>
+                        Choose image
+                    </label>
+                    <span class="file-name">
+                        {{ form.value.purchase_img || 'No file selected' }}
+                    </span>
+                </div>
 
-                @if(form.value.purchase_img){
-                <small class="text-primary d-block mt-2">
-                    Current File: {{ form.value.purchase_img }}
-                </small>
-                }
             </div>
 
-            <div class="wide">
+            <div class="note-field">
                 <label class="form-label" for="note">Note</label>
                 <textarea id="note" pTextarea rows="3" formControlName="note"></textarea>
             </div>

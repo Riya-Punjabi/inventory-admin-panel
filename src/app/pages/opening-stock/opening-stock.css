@@ -33,6 +33,10 @@
     justify-content: flex-end;
 }
 
+:host ::ng-deep .filter-actions .p-button {
+    min-height: 2.55rem;
+}
+
 :host ::ng-deep .filter-grid .p-datepicker,
 :host ::ng-deep .filter-grid .p-select,
 :host ::ng-deep .filter-grid .p-autocomplete,
@@ -41,20 +45,7 @@
 }
 
 .table-panel {
-    box-shadow: 0 10px 30px rgba(16, 24, 40, 0.05);
-}
-
-:host ::ng-deep .table-panel .p-datatable-thead > tr > th {
-    background: #f8fafc;
-    color: #344054;
-    font-size: 0.78rem;
-    font-weight: 700;
-    letter-spacing: 0;
-    text-transform: uppercase;
-}
-
-:host ::ng-deep .table-panel .p-datatable-tbody > tr > td {
-    vertical-align: middle;
+    box-shadow: var(--app-shadow-md);
 }
 
 @media (max-width: 767.98px) {
@@ -65,5 +56,21 @@
 
     .filter-actions {
         justify-content: flex-start;
+    }
+
+    :host ::ng-deep .filter-actions .p-button,
+    .filter-actions button {
+        flex: 1 1 10rem;
+    }
+}
+
+@media (max-width: 575.98px) {
+    :host ::ng-deep .table-panel .p-datatable-wrapper {
+        max-width: calc(100vw - 1.5rem);
+        overflow-x: auto;
+    }
+
+    .serial-button {
+        min-width: 5.5rem;
     }
 }

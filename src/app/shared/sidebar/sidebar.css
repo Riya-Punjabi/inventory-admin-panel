@@ -1,7 +1,7 @@
 .sidebar {
     width: 260px;
     height: 100vh;
-    background-color: #1e293b;
+    background: linear-gradient(180deg, var(--app-sidebar) 0%, #111827 100%);
     color: #ffffff;
     padding: 20px 15px;
     display: flex;
@@ -9,7 +9,9 @@
     position: fixed;
     left: 0;
     top: 0;
-    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 8px 0 30px rgba(15, 23, 42, 0.18);
+    transition: transform 220ms ease, box-shadow 220ms ease;
+    z-index: 900;
 }
 
 .brand {
@@ -25,7 +27,7 @@
     width: 42px;
     height: 42px;
     border-radius: 10px;
-    background-color: #22c55e;
+    background: linear-gradient(135deg, #22c55e, #10b981);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -53,24 +55,52 @@
     color: #dce4ef;
     display: flex;
     gap: 0.7rem;
+    min-height: 2.85rem;
     padding: 0.78rem 0.85rem;
+    position: relative;
     text-decoration: none;
-    transition: background-color 160ms ease, color 160ms ease;
+    transition: background-color 160ms ease, color 160ms ease, transform 160ms ease;
+}
+
+.nav-list a::before {
+    background: var(--app-sidebar-active);
+    border-radius: 999px;
+    content: "";
+    height: 1.45rem;
+    left: 0.35rem;
+    opacity: 0;
+    position: absolute;
+    transform: scaleY(0.4);
+    transition: opacity 160ms ease, transform 160ms ease;
+    width: 3px;
+}
+
+.nav-list a i,
+.nav-list a span {
+    position: relative;
 }
 
 .nav-list a:hover,
 .nav-list a.active {
     background: rgba(34, 197, 94, 0.14);
     color: #ffffff;
+    transform: translateX(3px);
 }
 
-.nav-list a.active {
-    border-left: 3px solid var(--app-sidebar-active);
+.nav-list a:hover::before,
+.nav-list a.active::before {
+    opacity: 1;
+    transform: scaleY(1);
 }
 
-@media (max-width: 768px) {
+@media (max-width: 991.98px) {
     .sidebar {
-        width: 220px;
+        transform: translateX(-105%);
+        width: min(82vw, 280px);
+    }
+
+    :host-context(.sidebar-open) .sidebar {
+        transform: translateX(0);
     }
 
     .brand strong {

@@ -28,6 +28,7 @@ export class SerialNos {
   saving = false;
   dialogVisible = false;
   error = '';
+  serialImagePreview = '';
   statusOptions: any[] = [{ label: 'All', value: 'NA' }];
   dialogStatusOptions: any[] = [];
   filterForm !: FormGroup;
@@ -114,6 +115,7 @@ export class SerialNos {
   }
 
   openNew(): void {
+    this.serialImagePreview = '';
     this.form.reset({
       srno: 0,
       os_srno: this.parentSrno,
@@ -131,16 +133,19 @@ export class SerialNos {
     this.serialNo.getById(record.srno).subscribe({
       next: (response) => {
         const latest = response.data || record;
+        const serialImg = latest.serial_img || '';
+        const serialImgBase64 = latest.serial_imgBase64 || '';
         this.form.patchValue({
           srno: latest.srno || 0,
           os_srno: latest.os_srno || this.parentSrno,
           status: latest.status || 0,
           serial_no1: latest.serial_no1 || '',
           serial_no2: latest.serial_no2 || '',
-          serial_img: latest.serial_img || '',
-          serial_imgBase64: latest.serial_imgBase64 || '',
+          serial_img: serialImg,
+          serial_imgBase64: serialImgBase64,
           qty: latest.qty || 1,
         });
+        this.serialImagePreview = this.imageSrc(serialImg, serialImgBase64);
         this.dialogVisible = true;
         this.cdr.detectChanges();
       },
@@ -165,8 +170,49 @@ export class SerialNos {
         serial_img: file.name,
         serial_imgBase64: result.includes(',') ? result.split(',')[1] : result,
       });
+      this.serialImagePreview = result;
+      this.cdr.detectChanges();
     };
     reader.readAsDataURL(file);
+  }
+
+  imageSrc(fileName?: string, base64?: string): string {
+    const value = String(fileName || '').trim();
+    const imageBase64 = String(base64 || '').trim();
+    const mimeType = this.imageMimeType(value);
+
+    if (imageBase64) {
+      return imageBase64.startsWith('data:') ? imageBase64 : `${mimeType};base64,${imageBase64}`;
+    }
+
+    if (/^(https?:\/\/|data:image\/)/i.test(value)) {
+      return value;
+    }
+
+    if (this.isImagePath(value)) {
+      const path = value.replace(/^\/+/, '');
+      return `${this.serialNo.API_BASE_URL}/${path}`;
+    }
+
+    return '';
+  }
+
+  private imageMimeType(fileName: string): string {
+    const extension = String(fileName || '').split('?')[0].split('.').pop()?.toLowerCase();
+    const mimeTypes: Record<string, string> = {
+      jpg: 'image/jpeg',
+      jpeg: 'image/jpeg',
+      png: 'image/png',
+      gif: 'image/gif',
+      webp: 'image/webp',
+      bmp: 'image/bmp',
+      svg: 'image/svg+xml',
+    };
+    return `data:${mimeTypes[extension || ''] || 'image/jpeg'}`;
+  }
+
+  private isImagePath(value: string): boolean {
+    return /^(?!\.)[a-z0-9_./-]+\.(png|jpe?g|gif|webp|bmp|svg)$/i.test(value);
   }
 
   save(): void {
@@ -205,4 +251,3 @@ export class SerialNos {
 
 
 } 
-

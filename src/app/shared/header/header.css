@@ -2,10 +2,14 @@
   align-items: center;
   background: var(--app-surface);
   border-bottom: 1px solid var(--app-line);
+  box-shadow: 0 1px 0 rgba(16, 24, 40, 0.02);
   display: flex;
   gap: 1rem;
   min-height: 64px;
   padding: 0.75rem 1.25rem;
+  position: sticky;
+  top: 0;
+  z-index: 700;
 }
 
 .menu-button {
@@ -13,21 +17,45 @@
   background: transparent;
   border: 1px solid var(--app-line);
   border-radius: 8px;
+  color: var(--app-text);
   display: none;
   height: 38px;
   justify-content: center;
+  transition: background-color 160ms ease, border-color 160ms ease, color 160ms ease, transform 160ms ease;
   width: 38px;
+}
+
+.menu-button:hover {
+  background: var(--app-primary-soft);
+  border-color: rgba(34, 197, 94, 0.35);
+  color: var(--app-primary);
+  transform: translateY(-1px);
 }
 
 .header-copy {
   display: grid;
   line-height: 1.25;
   margin-right: auto;
+  min-width: 0;
 }
 
 .header-copy span {
   color: var(--app-muted);
   font-size: 0.86rem;
+}
+
+.header-copy strong {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+:host ::ng-deep .app-header .p-button {
+  transition: transform 160ms ease, box-shadow 160ms ease, background-color 160ms ease;
+}
+
+:host ::ng-deep .app-header .p-button:hover {
+  transform: translateY(-1px);
 }
 
 @media (max-width: 991.98px) {
@@ -38,10 +66,15 @@
 
 @media (max-width: 575.98px) {
   .app-header {
-    padding: 0.7rem;
+    gap: 0.65rem;
+    padding: 0.65rem 0.75rem;
   }
 
   .header-copy span {
     display: none;
+  }
+
+  .header-copy strong {
+    font-size: 0.9rem;
   }
 }

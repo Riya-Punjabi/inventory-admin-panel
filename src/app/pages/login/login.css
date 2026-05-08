@@ -1,0 +1,225 @@
+.login-page {
+    align-items: center;
+    background:
+        linear-gradient(135deg, rgba(220, 252, 231, 0.92), rgba(245, 247, 251, 0.8)),
+        var(--app-bg);
+    display: flex;
+    min-height: 100vh;
+    overflow-x: hidden;
+    padding: 1.5rem;
+}
+
+.login-shell {
+    display: grid;
+    gap: 1.25rem;
+    margin: 0 auto;
+    max-width: 28rem;
+    width: 100%;
+}
+
+.login-brand {
+    align-items: center;
+    display: flex;
+    gap: 0.85rem;
+}
+
+.brand-mark {
+    align-items: center;
+    background: linear-gradient(135deg, #22c55e, #10b981);
+    border-radius: 12px;
+    box-shadow: 0 14px 30px rgba(16, 185, 129, 0.24);
+    color: #ffffff;
+    display: flex;
+    font-size: 1.35rem;
+    font-weight: 800;
+    height: 3.25rem;
+    justify-content: center;
+    width: 3.25rem;
+}
+
+.login-brand h1 {
+    color: var(--app-text);
+    font-size: 1.35rem;
+    font-weight: 800;
+    margin: 0;
+}
+
+.login-brand p {
+    color: var(--app-muted);
+    margin: 0.1rem 0 0;
+}
+
+.login-card {
+    background: rgba(255, 255, 255, 0.94);
+    border: 1px solid rgba(217, 226, 236, 0.95);
+    border-radius: 8px;
+    box-shadow: 0 24px 70px rgba(15, 23, 42, 0.12);
+    display: grid;
+    gap: 1.15rem;
+    padding: 1.25rem;
+}
+
+.login-heading span {
+    color: var(--app-muted);
+    display: block;
+    font-size: 0.86rem;
+    font-weight: 700;
+    margin-bottom: 0.2rem;
+}
+
+.login-heading h2 {
+    color: var(--app-text);
+    font-size: 1.6rem;
+    font-weight: 800;
+    margin: 0;
+}
+
+.field-stack {
+    display: grid;
+    gap: 0.85rem;
+}
+
+.login-field {
+    display: grid;
+    gap: 0.35rem;
+}
+
+.input-shell {
+    align-items: center;
+    background: #ffffff;
+    border: 1px solid var(--app-line);
+    border-radius: 8px;
+    display: flex;
+    min-height: 3rem;
+    overflow: hidden;
+    transition: border-color 160ms ease, box-shadow 160ms ease, transform 160ms ease;
+}
+
+.input-shell:focus-within {
+    border-color: #22c55e;
+    box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.14);
+    transform: translateY(-1px);
+}
+
+.input-shell.is-invalid {
+    border-color: #ef4444;
+}
+
+.input-shell.is-invalid:focus-within {
+    border-color: #ef4444;
+    box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.14);
+}
+
+.input-shell.is-invalid i,
+.input-shell.is-invalid input,
+:host ::ng-deep .password-shell.is-invalid .p-password-input,
+:host ::ng-deep .password-shell.is-invalid .p-password-toggle-mask-icon,
+:host ::ng-deep .password-shell.is-invalid .p-password-toggle-icon {
+    color: #dc2626;
+}
+
+.input-shell.is-invalid input::placeholder,
+:host ::ng-deep .password-shell.is-invalid .p-password-input::placeholder {
+    color: #dc2626;
+}
+
+.input-shell i {
+    align-items: center;
+    color: #64748b;
+    display: flex;
+    flex: 0 0 3rem;
+    font-size: 1rem;
+    height: 3rem;
+    justify-content: center;
+    pointer-events: none;
+}
+
+.input-shell input,
+:host ::ng-deep .password-shell .p-password-input {
+    appearance: none;
+    background: transparent;
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
+    color: var(--app-text);
+    flex: 1 1 auto;
+    font-size: 0.98rem;
+    height: 3rem;
+    line-height: 3rem;
+    min-width: 0;
+    outline: 0;
+    padding: 0 0.95rem 0 0;
+    width: 100%;
+}
+
+.input-shell input:enabled:focus,
+:host ::ng-deep .password-shell .p-password-input:enabled:focus {
+    border: 0;
+    box-shadow: none;
+    outline: 0;
+}
+
+:host ::ng-deep .password-shell .p-password,
+:host ::ng-deep .password-shell .p-password-input {
+    width: 100%;
+}
+
+:host ::ng-deep .password-shell .p-password {
+    display: flex;
+    flex: 1 1 auto;
+    min-width: 0;
+}
+
+:host ::ng-deep .password-shell .p-password-input {
+    padding-right: 2.6rem;
+}
+
+:host ::ng-deep .password-shell .p-password-toggle-mask-icon,
+:host ::ng-deep .password-shell .p-password-toggle-icon {
+    color: #94a3b8;
+    right: 0.85rem;
+}
+
+.input-shell input:-webkit-autofill,
+.input-shell input:-webkit-autofill:hover,
+.input-shell input:-webkit-autofill:focus,
+:host ::ng-deep .password-shell .p-password-input:-webkit-autofill,
+:host ::ng-deep .password-shell .p-password-input:-webkit-autofill:hover,
+:host ::ng-deep .password-shell .p-password-input:-webkit-autofill:focus {
+    -webkit-box-shadow: 0 0 0 1000px #ffffff inset;
+    -webkit-text-fill-color: var(--app-text);
+    caret-color: var(--app-text);
+    transition: background-color 9999s ease-in-out 0s;
+}
+
+.input-shell input::placeholder,
+:host ::ng-deep .password-shell .p-password-input::placeholder {
+    color: #94a3b8;
+    opacity: 1;
+}
+
+.login-submit {
+    justify-content: center;
+    min-height: 2.8rem;
+    width: 100%;
+}
+
+@media (max-width: 575.98px) {
+    .login-page {
+        align-items: stretch;
+        padding: 0.9rem;
+    }
+
+    .login-shell {
+        align-content: center;
+        gap: 1rem;
+    }
+
+    .login-card {
+        padding: 1rem;
+    }
+
+    .login-brand h1 {
+        font-size: 1.18rem;
+    }
+}

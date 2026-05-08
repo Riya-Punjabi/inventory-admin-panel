@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
 
@@ -10,6 +10,7 @@ import { ButtonModule } from 'primeng/button';
 })
 
 export class Header {
+  @Output() readonly menuToggle = new EventEmitter<void>();
 
   profile: any;
   constructor(private router: Router) { }

@@ -8,6 +8,8 @@
     --app-primary-soft: #dcfce7;
     --app-sidebar: #172033;
     --app-sidebar-active: #22c55e;
+    --app-shadow-sm: 0 1px 2px rgba(16, 24, 40, 0.06);
+    --app-shadow-md: 0 10px 30px rgba(16, 24, 40, 0.08);
 }
 
 * {
@@ -24,6 +26,7 @@ body {
     background: var(--app-bg);
     color: var(--app-text);
     font-family: Inter, "Segoe UI", Arial, sans-serif;
+    overflow-x: hidden;
 }
 
 a {
@@ -31,7 +34,7 @@ a {
 }
 
 .page-title {
-    font-size: 1.35rem;
+    font-size: clamp(1.18rem, 1rem + 0.7vw, 1.45rem);
     font-weight: 700;
     margin: 0;
 }
@@ -41,6 +44,13 @@ a {
     border: 1px solid var(--app-line);
     border-radius: 8px;
     padding: 1rem;
+    box-shadow: var(--app-shadow-sm);
+    transition: border-color 160ms ease, box-shadow 160ms ease, transform 160ms ease;
+}
+
+.section-panel:hover {
+    border-color: #c7d4e2;
+    box-shadow: var(--app-shadow-md);
 }
 
 .form-label {
@@ -62,6 +72,43 @@ a {
     width: 100%;
 }
 
+.p-button,
+.form-control,
+.p-inputtext {
+    transition: border-color 160ms ease, box-shadow 160ms ease, transform 160ms ease;
+}
+
+.p-button:hover {
+    transform: translateY(-1px);
+}
+
+.p-datatable .p-datatable-thead > tr > th {
+    background: #f8fafc;
+    border-color: var(--app-line);
+    color: #344054;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0;
+    padding: 0.85rem 1rem;
+    text-transform: uppercase;
+    vertical-align: middle;
+    white-space: nowrap;
+}
+
+.p-datatable .p-datatable-tbody > tr > td {
+    border-color: var(--app-line);
+    padding: 0.85rem 1rem;
+    vertical-align: middle;
+}
+
+.p-datatable-tbody > tr {
+    transition: background-color 140ms ease;
+}
+
+.p-datatable-tbody > tr:hover {
+    background: #f8fafc;
+}
+
 .muted {
     color: var(--app-muted);
 }
@@ -69,6 +116,10 @@ a {
 @media (max-width: 767.98px) {
     .section-panel {
         padding: 0.85rem;
+    }
+
+    .page-stack {
+        gap: 0.85rem;
     }
 }
 
@@ -233,9 +284,24 @@ a {
 
     .filter-actions {
         flex-wrap: wrap;
+        width: 100%;
     }
 
-    :host ::ng-deep .table-panel .p-paginator {
+    .filter-actions .p-button,
+    .filter-actions button {
+        flex: 1 1 10rem;
+        justify-content: center;
+    }
+
+    .table-panel {
+        overflow: hidden;
+    }
+
+    .table-panel .p-datatable-wrapper {
+        overflow-x: auto;
+    }
+
+    .table-panel .p-paginator {
         justify-content: flex-start;
         overflow-x: auto;
         padding: 0.6rem 0.85rem;

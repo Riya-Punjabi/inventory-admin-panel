@@ -1,10 +1,12 @@
 <header class="app-header">
+    <button class="menu-button" type="button" aria-label="Open navigation" (click)="menuToggle.emit()">
+        <i class="pi pi-bars"></i>
+    </button>
 
     <div class="header-copy">
+        <span>Signed in as</span>
         <strong>
-            {{ profile?.login_name || 'User' }}
-            ·
-            {{ profile?.role_name || 'Admin' }}
+            {{ profile?.login_name || 'User' }} | {{ profile?.role_name || 'Admin' }}
         </strong>
     </div>
 
@@ -12,5 +14,4 @@
         <i class="pi pi-sign-out me-2"></i>
         Logout
     </button>
-
 </header>

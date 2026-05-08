@@ -513,16 +513,39 @@ export class AddEditOpeningStock {
       .filter((value: string) => !!value);
   }
 
-  private imageSrc(fileName?: string, base64?: string): string {
+  imageSrc(fileName?: string, base64?: string): string {
     const value = String(fileName || '').trim();
     const imageBase64 = String(base64 || '').trim();
+    const mimeType = this.imageMimeType(value);
     if (imageBase64) {
-      return imageBase64.startsWith('data:') ? imageBase64 : `data:image/*;base64,${imageBase64}`;
+      return imageBase64.startsWith('data:') ? imageBase64 : `${mimeType};base64,${imageBase64}`;
     }
     if (/^(https?:\/\/|data:image\/)/i.test(value)) {
       return value;
     }
+    if (this.isImagePath(value)) {
+      const path = value.replace(/^\/+/, '');
+      return `${this.openingStock.API_BASE_URL}/${path}`;
+    }
     return '';
+  }
+
+  private imageMimeType(fileName: string): string {
+    const extension = String(fileName || '').split('?')[0].split('.').pop()?.toLowerCase();
+    const mimeTypes: Record<string, string> = {
+      jpg: 'image/jpeg',
+      jpeg: 'image/jpeg',
+      png: 'image/png',
+      gif: 'image/gif',
+      webp: 'image/webp',
+      bmp: 'image/bmp',
+      svg: 'image/svg+xml',
+    };
+    return `data:${mimeTypes[extension || ''] || 'image/jpeg'}`;
+  }
+
+  private isImagePath(value: string): boolean {
+    return /^(?!\.)[a-z0-9_./-]+\.(png|jpe?g|gif|webp|bmp|svg)$/i.test(value);
   }
 
   private setImagePreview(imageField: string, source: string): void {

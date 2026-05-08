@@ -98,16 +98,24 @@
     </section>
 </div>
 
-<p-dialog [visible]="dialogVisible" (visibleChange)="dialogVisible = $event" [modal]="true" [style]="{
+<p-dialog [visible]="dialogVisible" (visibleChange)="dialogVisible = $event" [modal]="true" styleClass="serial-dialog" [style]="{
         width: 'min(560px, 96vw)'
     }" header="Serial Number">
-    <form [formGroup]="form" class="page-stack" (ngSubmit)="save()">
-        <div>
-            <label class="form-label">
-                Status
-            </label>
-            <p-select formControlName="status" [options]="dialogStatusOptions" optionLabel="label"
-                optionValue="value" />
+    <form [formGroup]="form" class="serial-form" (ngSubmit)="save()">
+        <div class="serial-form-grid">
+            <div>
+                <label class="form-label">
+                    Status
+                </label>
+                <p-select formControlName="status" [options]="dialogStatusOptions" optionLabel="label"
+                    optionValue="value" />
+            </div>
+            <div>
+                <label class="form-label">
+                    Qty
+                </label>
+                <p-inputNumber formControlName="qty" [min]="0" />
+            </div>
         </div>
         <div>
             <label class="form-label">
@@ -121,19 +129,33 @@
             </label>
             <input type="text" pInputText formControlName="serial_no2" />
         </div>
-        <div>
-            <label class="form-label">
-                Qty
-            </label>
-            <p-inputNumber formControlName="qty" [min]="0" />
-        </div>
-        <div>
-            <label class="form-label">
+        <div class="serial-image-field">
+            <label class="form-label" for="serial_img">
                 Serial Image
             </label>
-            <input class="form-control" type="file" accept="image/*" (change)="handleFile($event)" />
+            <div class="serial-image-preview-shell">
+                @if(serialImagePreview){
+                <img class="serial-image-preview" [src]="serialImagePreview" alt="Serial image preview" />
+                } @else {
+                <div class="serial-image-empty">
+                    <i class="pi pi-image"></i>
+                    <span>No serial image</span>
+                </div>
+                }
+            </div>
+            <div class="file-control">
+                <input id="serial_img" class="file-input" type="file" accept="image/*"
+                    (change)="handleFile($event)" />
+                <label class="file-trigger" for="serial_img">
+                    <i class="pi pi-upload"></i>
+                    Choose image
+                </label>
+                <span class="file-name">
+                    {{ form.value.serial_img || 'No file selected' }}
+                </span>
+            </div>
         </div>
-        <div class="d-flex justify-content-end gap-2">
+        <div class="serial-dialog-actions">
             <button pButton type="button" severity="secondary" outlined (click)="dialogVisible = false">
                 <i class="pi pi-times me-2"></i>
                 Cancel

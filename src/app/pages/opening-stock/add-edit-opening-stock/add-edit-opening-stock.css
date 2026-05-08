@@ -1,14 +1,161 @@
-.image-field {
-    display: grid;
-    gap: 0.55rem;
+:host ::ng-deep .p-autocomplete,
+:host ::ng-deep .p-datepicker,
+:host ::ng-deep .p-inputnumber,
+:host ::ng-deep .p-select,
+:host ::ng-deep .p-textarea,
+:host ::ng-deep .p-inputtext {
+    width: 100%;
 }
 
-.image-preview {
+:host ::ng-deep .p-autocomplete,
+:host ::ng-deep .p-datepicker,
+:host ::ng-deep .p-inputnumber,
+:host ::ng-deep .p-select,
+.form-control {
+    min-height: 2.55rem;
+}
+
+section.section-panel h2 {
+    color: var(--app-text);
+    font-weight: 700;
+}
+
+.image-grid {
+    align-items: start;
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.image-field {
+    display: grid;
+    gap: 0.6rem;
+    min-width: 0;
+}
+
+.image-preview-shell {
+    align-items: center;
+    aspect-ratio: 16 / 9;
     background: #f8fafc;
     border: 1px solid var(--app-line);
     border-radius: 8px;
-    height: 11rem;
-    object-fit: contain;
-    padding: 0.5rem;
+    display: flex;
+    justify-content: center;
+    max-width: 18rem;
+    min-height: 8.5rem;
+    overflow: hidden;
+    padding: 0.65rem;
     width: 100%;
+}
+
+.image-preview {
+    display: block;
+    height: 100%;
+    max-height: 9.5rem;
+    max-width: 100%;
+    object-fit: contain;
+    width: 100%;
+}
+
+.image-empty {
+    align-items: center;
+    color: var(--app-muted);
+    display: grid;
+    gap: 0.45rem;
+    justify-items: center;
+    min-height: 6.5rem;
+    text-align: center;
+}
+
+.image-empty i {
+    color: #94a3b8;
+    font-size: 1.5rem;
+}
+
+.file-control {
+    align-items: stretch;
+    border: 1px solid var(--app-line);
+    border-radius: 8px;
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    min-height: 2.75rem;
+    overflow: hidden;
+}
+
+.file-input {
+    height: 1px;
+    opacity: 0;
+    position: absolute;
+    width: 1px;
+}
+
+.file-trigger {
+    align-items: center;
+    background: #f8fafc;
+    border-right: 1px solid var(--app-line);
+    color: var(--app-text);
+    cursor: pointer;
+    display: inline-flex;
+    font-weight: 600;
+    gap: 0.45rem;
+    justify-content: center;
+    margin: 0;
+    padding: 0 0.95rem;
+    transition: background-color 160ms ease, color 160ms ease;
+    white-space: nowrap;
+}
+
+.file-trigger:hover {
+    background: var(--app-primary-soft);
+    color: var(--app-primary);
+}
+
+.file-name {
+    align-items: center;
+    color: var(--app-muted);
+    display: flex;
+    min-width: 0;
+    overflow-wrap: anywhere;
+    padding: 0.55rem 0.85rem;
+}
+
+.current-file {
+    color: #2563eb;
+    display: block;
+    font-size: 0.84rem;
+    line-height: 1.35;
+    overflow-wrap: anywhere;
+}
+
+.note-field {
+    grid-column: 1 / -1;
+}
+
+@media (max-width: 991.98px) {
+    .image-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 575.98px) {
+    :host ::ng-deep .p-button,
+    a[pButton],
+    button[pButton] {
+        justify-content: center;
+    }
+
+    .image-preview-shell {
+        max-width: 100%;
+        min-height: 8rem;
+    }
+
+    .file-control {
+        grid-template-columns: 1fr;
+    }
+
+    .file-trigger {
+        border-bottom: 1px solid var(--app-line);
+        border-right: 0;
+        min-height: 2.5rem;
+    }
 }
