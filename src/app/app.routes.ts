@@ -1,7 +1,6 @@
 import { Routes } from '@angular/router';
 import { Login } from './pages/login/login';
 import { AdminLayout } from './layout/admin-layout/admin-layout';
-import { OpeningStock } from './pages/opening-stock/opening-stock';
 import { authGuard } from './guards/auth-guard';
 
 export const routes: Routes = [
@@ -35,12 +34,12 @@ export const routes: Routes = [
       {
         path: 'opening-stock/new',
         loadComponent: () =>
-          import('./pages/opening-stock/add-edit-opening-stock/add-edit-opening-stock').then((m) => m.AddEditOpeningStock),
+          import('./pages/opening-stock/opening-stock').then((m) => m.AddEditOpeningStock),
       },
       {
         path: 'opening-stock/:srno/edit',
         loadComponent: () =>
-          import('./pages/opening-stock/add-edit-opening-stock/add-edit-opening-stock').then((m) => m.AddEditOpeningStock),
+          import('./pages/opening-stock/opening-stock').then((m) => m.AddEditOpeningStock),
       },
       {
         path: 'opening-stock/:srno/serial-nos',

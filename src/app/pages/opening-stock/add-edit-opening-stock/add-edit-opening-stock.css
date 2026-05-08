@@ -1,0 +1,14 @@
+.image-field {
+    display: grid;
+    gap: 0.55rem;
+}
+
+.image-preview {
+    background: #f8fafc;
+    border: 1px solid var(--app-line);
+    border-radius: 8px;
+    height: 11rem;
+    object-fit: contain;
+    padding: 0.5rem;
+    width: 100%;
+}

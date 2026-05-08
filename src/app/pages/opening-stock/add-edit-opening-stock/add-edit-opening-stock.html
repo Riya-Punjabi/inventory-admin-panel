@@ -49,7 +49,7 @@
             <div>
                 <label class="form-label" for="purchase_date">Purchase Date</label>
                 <p-datepicker inputId="purchase_date" formControlName="purchase_date" dateFormat="yy-mm-dd"
-                    [showIcon]="true" />
+                    [showIcon]="true" [selectOtherMonths]="true" />
             </div>
             <div>
                 <label class="form-label" for="purchase_ref_no">Bill No</label>
@@ -92,7 +92,8 @@
             </div>
             <div>
                 <label class="form-label" for="mfg_date">MFG Date</label>
-                <p-datepicker inputId="mfg_date" formControlName="mfg_date" dateFormat="yy-mm-dd" [showIcon]="true" />
+                <p-datepicker inputId="mfg_date" formControlName="mfg_date" dateFormat="yy-mm-dd" [showIcon]="true"
+                    [selectOtherMonths]="true" />
             </div>
             <div>
                 <label class="form-label" for="location">Location</label>
@@ -132,25 +133,31 @@
     <section class="section-panel">
         <h2 class="h6 mb-3">Images and Notes</h2>
         <div class="form-grid">
-            <div>
+            <div class="image-field">
                 <label class="form-label" for="product_img">Product Image</label>
+                @if(productImagePreview){
+                <img class="image-preview" [src]="productImagePreview" alt="Product image preview" />
+                }
                 <input id="product_img" class="form-control" type="file" accept="image/*"
                     (change)="handleFile($event, 'product_img', 'product_imgBase64')" />
 
                 @if(form.value.product_img){
-                <small class="text-primary d-block mt-1">
+                <small class="text-primary d-block mt-2">
                     Current File: {{ form.value.product_img }}
                 </small>
                 }
             </div>
 
-            <div>
+            <div class="image-field">
                 <label class="form-label" for="purchase_img">Purchase Image</label>
+                @if(purchaseImagePreview){
+                <img class="image-preview" [src]="purchaseImagePreview" alt="Purchase image preview" />
+                }
                 <input id="purchase_img" class="form-control" type="file" accept="image/*"
                     (change)="handleFile($event, 'purchase_img', 'purchase_imgBase64')" />
 
                 @if(form.value.purchase_img){
-                <small class="text-primary d-block mt-1">
+                <small class="text-primary d-block mt-2">
                     Current File: {{ form.value.purchase_img }}
                 </small>
                 }

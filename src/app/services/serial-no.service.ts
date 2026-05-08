@@ -11,7 +11,7 @@ export class SerialNoService {
 
     list(filters: any): Observable<any> {
         const body = {
-            searchString: filters.searchString || 'NA',
+            searchString: filters.searchString || '',
             text1: String(filters.parentSrno),
             text2: filters.status === null || filters.status === undefined || filters.status === '' ? 'NA' : String(filters.status),
             text3: 'NA',

@@ -12,31 +12,38 @@
         </a>
     </div>
 
-    <form [formGroup]="filters" class="section-panel filter-grid" (ngSubmit)="search()">
-        <div>
-            <label class="form-label">
-                From
-            </label>
-            <p-datepicker formControlName="from" dateFormat="yy-mm-dd" [showIcon]="true" />
-
-        </div>
-        <div>
-            <label class="form-label">
-                To
-            </label>
-            <p-datepicker formControlName="to" dateFormat="yy-mm-dd" [showIcon]="true" />
+    <form [formGroup]="filters" class="section-panel filters-panel" (ngSubmit)="search()">
+        <div class="filters-header">
+            <div>
+                <h2>Filters</h2>
+                <span>Use the available filters to narrow opening stock.</span>
+            </div>
+            <div class="filter-actions">
+                <button pButton type="submit" icon="pi pi-search" label="Search"></button>
+                <button pButton type="button" severity="secondary" outlined icon="pi pi-refresh" label="Reset"
+                    (click)="reset()"></button>
+            </div>
         </div>
 
-        <div>
+        <div class="filter-grid">
+            <div>
+            <label class="form-label">
+                Date Range
+            </label>
+            <p-datepicker formControlName="dateRange" selectionMode="range" dateFormat="yy-mm-dd" [showIcon]="true"
+                [selectOtherMonths]="true" [readonlyInput]="true" />
+            </div>
+
+            <div>
             <label class="form-label">
                 Product
             </label>
             <p-autoComplete formControlName="productName" [suggestions]="suggestions.productName"
                 (completeMethod)="complete('productName', $event)" [dropdown]="true" [showClear]="true"
                 styleClass="w-100" inputStyleClass="w-100" />
-        </div>
+            </div>
 
-        <div>
+            <div>
             <label class="form-label">
                 Supplier
             </label>
@@ -44,9 +51,9 @@
                 (completeMethod)="complete('supplier', $event)" [dropdown]="true" [showClear]="true" styleClass="w-100"
                 inputStyleClass="w-100" />
 
-        </div>
+            </div>
 
-        <div>
+            <div>
             <label class="form-label">
                 Location
             </label>
@@ -54,32 +61,58 @@
                 (completeMethod)="complete('location', $event)" [dropdown]="true" [showClear]="true" styleClass="w-100"
                 inputStyleClass="w-100" />
 
-        </div>
-        <div>
+            </div>
+
+            <div>
+                <label class="form-label">
+                    Sub Location
+                </label>
+                <p-autoComplete formControlName="subloc" [suggestions]="suggestions.subloc"
+                    (completeMethod)="complete('subloc', $event)" [dropdown]="true" [showClear]="true"
+                    styleClass="w-100" inputStyleClass="w-100" />
+            </div>
+
+            <div>
             <label class="form-label">
                 Model
             </label>
             <p-autoComplete formControlName="modelNo" [suggestions]="suggestions.modelNo"
                 (completeMethod)="complete('modelNo', $event)" [dropdown]="true" [showClear]="true" styleClass="w-100"
                 inputStyleClass="w-100" />
-        </div>
-        <div>
+            </div>
+
+            <div>
+                <label class="form-label">
+                    Product Category
+                </label>
+                <p-autoComplete formControlName="productCategory" [suggestions]="suggestions.productCategory"
+                    (completeMethod)="complete('productCategory', $event)" [dropdown]="true" [showClear]="true"
+                    styleClass="w-100" inputStyleClass="w-100" />
+            </div>
+
+            <div>
+                <label class="form-label">
+                    Product Type
+                </label>
+                <p-autoComplete formControlName="productType" [suggestions]="suggestions.productType"
+                    (completeMethod)="complete('productType', $event)" [dropdown]="true" [showClear]="true"
+                    styleClass="w-100" inputStyleClass="w-100" />
+            </div>
+
+            <div>
+                <label class="form-label">
+                    Bill No
+                </label>
+                <input class="form-control" type="text" formControlName="billNo" />
+            </div>
+
+            <div>
             <label class="form-label">
                 Spare
             </label>
             <p-select formControlName="spare" [options]="spareOptions" optionLabel="label" optionValue="value" />
 
-        </div>
-        <div class="filter-actions">
-            <button pButton type="submit">
-                <i class="pi pi-search me-2"></i>
-                Search
-            </button>
-
-            <button pButton type="button" severity="secondary" outlined (click)="reset()">
-                <i class="pi pi-refresh me-2"></i>
-                Reset
-            </button>
+            </div>
         </div>
 
     </form>

@@ -1,6 +1,14 @@
-import { Injectable, inject } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import {
+    ApiDataResponse,
+    ApiListResponse,
+    ApiMessageResponse,
+    OpeningStockListFilters,
+    OpeningStockRecord,
+    OpeningStockRefreshData,
+} from '../pages/opening-stock/opening-stock.models';
 
 @Injectable({
     providedIn: 'root'
@@ -11,27 +19,22 @@ export class OpeningStockService {
 
     constructor(private http: HttpClient) { }
 
-    refresh(): Observable<any> {
+    refresh(): Observable<OpeningStockRefreshData> {
         const url = `${this.API_BASE_URL}/api/opening_stock/refresh`;
         return this.http.get(url);
     }
 
-    deleteOpeningStock(srno: number) {
+    deleteOpeningStock(srno: number): Observable<ApiMessageResponse> {
         return this.http.delete(`${this.API_BASE_URL}/api/opening_stock/delete/${srno}`);
     }
 
-    list(filters: any = {}): Observable<any> {
-        let dateRange = 'NA';
-        if (filters.dateRange?.from && filters.dateRange?.to) {
-            const fromDate = this.formatDate(filters.dateRange.from);
-            const toDate = this.formatDate(filters.dateRange.to);
-            dateRange = `${fromDate}_${toDate}`;
-        }
+    list(filters: OpeningStockListFilters = {}): Observable<ApiListResponse<OpeningStockRecord>> {
+        const dateRange = this.dateRangeFilter(filters.dateRange?.from, filters.dateRange?.to);
 
-        const subloc = filters.subloc || 'NA';
-        const modelNo = filters.modelNo || 'NA';
-        const productCategory = filters.productCategory || 'NA';
-        const productType = filters.productType || 'NA';
+        const subloc = this.pathFilter(filters.subloc);
+        const modelNo = this.pathFilter(filters.modelNo);
+        const productCategory = this.pathFilter(filters.productCategory);
+        const productType = this.pathFilter(filters.productType);
 
         const spare = filters.spare === null || filters.spare === undefined || filters.spare === '' ? 'NA' : filters.spare;
 
@@ -39,11 +42,11 @@ export class OpeningStockService {
             `${dateRange}-${subloc}-${modelNo}-${productCategory}-${productType}-${spare}`;
 
         const body = {
-            searchString: 'NA',
-            text1: filters.billNo || 'NA',
-            text2: filters.productName || 'NA',
-            text3: filters.supplier || 'NA',
-            text4: filters.location || 'NA',
+            searchString: '',
+            text1: this.bodyFilter(filters.billNo),
+            text2: this.bodyFilter(filters.productName),
+            text3: this.bodyFilter(filters.supplier),
+            text4: this.bodyFilter(filters.location),
             pageNo: filters.pageNo || 1,
             pageSize: filters.pageSize || 10,
             sortField: 11
@@ -52,12 +55,12 @@ export class OpeningStockService {
         return this.http.post(url, body);
     }
 
-    getById(srno: number): Observable<any> {
+    getById(srno: number): Observable<ApiDataResponse<OpeningStockRecord>> {
         const url = `${this.API_BASE_URL}/api/opening_stock/getbyid/${srno}`;
         return this.http.get(url);
     }
 
-    save(data: any): Observable<any> {
+    save(data: Partial<OpeningStockRecord>): Observable<ApiMessageResponse> {
         const today = this.getTodayDate();
         const body: any = {};
         for (const key of Object.keys(data || {})) {
@@ -91,13 +94,63 @@ export class OpeningStockService {
     }
 
     formatDate(date: any): string {
-        const newDate = new Date(date);
+        if (!date) return '';
+
+        if (typeof date === 'string') {
+            const normalized = date.trim();
+            const dateOnly = normalized.match(/^(\d{4})[-_/](\d{2})[-_/](\d{2})/);
+            if (dateOnly) {
+                return `${dateOnly[1]}_${dateOnly[2]}_${dateOnly[3]}`;
+            }
+        }
+        
+        let newDate: Date;
+        
+        if (date instanceof Date) {
+            newDate = date;
+        } else if (typeof date === 'string') {
+            // Handle string dates (yyyy-mm-dd format from datepicker)
+            newDate = new Date(date);
+        } else {
+            // Handle any other format
+            newDate = new Date(date);
+        }
+        
+        // Check if date is valid
+        if (isNaN(newDate.getTime())) {
+            return '';
+        }
+        
         const year = newDate.getFullYear();
         const month = String(newDate.getMonth() + 1)
             .padStart(2, '0');
         const day = String(newDate.getDate())
             .padStart(2, '0');
         return `${year}_${month}_${day}`;
+    }
+
+    dateRangeFilter(from?: Date | string | null, to?: Date | string | null): string {
+        if (!from && !to) {
+            return 'NA';
+        }
+
+        const fromDate = this.formatDate(from || to);
+        const toDate = this.formatDate(to || from);
+        if (!fromDate || !toDate) {
+            return 'NA';
+        }
+
+        return `%27${fromDate}%27%20and%20%27${toDate}%27`;
+    }
+
+    pathFilter(value: unknown): string {
+        const normalized = String(value ?? '').trim();
+        return normalized ? encodeURIComponent(normalized) : 'NA';
+    }
+
+    bodyFilter(value: unknown): string {
+        const normalized = String(value ?? '').trim();
+        return normalized || 'NA';
     }
 
     getTodayDate(): string {
