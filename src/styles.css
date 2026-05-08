@@ -1,1 +1,257 @@
-/* You can add global styles to this file, and also import other style files */
+:root {
+    --app-bg: #f5f7fb;
+    --app-surface: #ffffff;
+    --app-line: #d9e2ec;
+    --app-text: #182230;
+    --app-muted: #667085;
+    --app-primary: #14532d;
+    --app-primary-soft: #dcfce7;
+    --app-sidebar: #172033;
+    --app-sidebar-active: #22c55e;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    min-height: 100%;
+}
+
+body {
+    margin: 0;
+    background: var(--app-bg);
+    color: var(--app-text);
+    font-family: Inter, "Segoe UI", Arial, sans-serif;
+}
+
+a {
+    color: inherit;
+}
+
+.page-title {
+    font-size: 1.35rem;
+    font-weight: 700;
+    margin: 0;
+}
+
+.section-panel {
+    background: var(--app-surface);
+    border: 1px solid var(--app-line);
+    border-radius: 8px;
+    padding: 1rem;
+}
+
+.form-label {
+    color: #344054;
+    font-size: 0.86rem;
+    font-weight: 600;
+}
+
+.p-component {
+    font-family: inherit;
+}
+
+.p-inputtext,
+.p-password,
+.p-autocomplete,
+.p-datepicker,
+.p-select,
+.p-textarea {
+    width: 100%;
+}
+
+.muted {
+    color: var(--app-muted);
+}
+
+@media (max-width: 767.98px) {
+    .section-panel {
+        padding: 0.85rem;
+    }
+}
+
+.page-stack {
+    display: grid;
+    gap: 1rem;
+}
+
+.filter-grid {
+    align-items: end;
+    display: grid;
+    gap: 0.85rem;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.filter-actions {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.filter-grid p-autocomplete,
+.filter-grid p-datepicker,
+.filter-grid p-select {
+    width: 100%;
+}
+
+.table-panel {
+    min-height: auto;
+}
+
+.empty-table {
+    align-items: center;
+    color: var(--app-muted);
+    display: flex;
+    gap: 0.55rem;
+    justify-content: center;
+    min-height: 8rem;
+}
+
+.empty-table i {
+    color: #94a3b8;
+    font-size: 1.2rem;
+}
+
+.status-pill {
+    background: var(--app-primary-soft);
+    border-radius: 999px;
+    color: var(--app-primary);
+    display: inline-flex;
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 0.25rem 0.55rem;
+}
+
+.serial-button {
+    white-space: nowrap;
+}
+
+.table-total {
+    color: var(--app-text);
+    font-weight: 400;
+    white-space: nowrap;
+}
+
+:host ::ng-deep .table-panel .p-paginator {
+    align-items: center;
+    border-top: 1px solid var(--app-line);
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 0.35rem;
+    justify-content: flex-end;
+    min-height: 3.5rem;
+    padding: 0.45rem 0.85rem;
+}
+
+:host ::ng-deep .table-panel .p-paginator-left-content {
+    margin-right: auto;
+}
+
+:host ::ng-deep .table-panel .p-paginator-right-content {
+    margin-left: 0.5rem;
+}
+
+:host ::ng-deep .table-panel .p-paginator-current {
+    margin-left: 0;
+    white-space: nowrap;
+}
+
+.rows-control {
+    align-items: center;
+    display: inline-flex;
+    gap: 0.45rem;
+    white-space: nowrap;
+}
+
+.rows-control label {
+    color: var(--app-muted);
+    font-size: 0.85rem;
+    font-weight: 700;
+}
+
+.rows-control select {
+    appearance: auto;
+    background: #ffffff;
+    border: 1px solid var(--app-line);
+    border-radius: 0.45rem;
+    color: var(--app-text);
+    font: inherit;
+    height: 2.25rem;
+    padding: 0 0.45rem;
+    width: 4.25rem;
+}
+
+.form-grid {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.form-grid .wide {
+    grid-column: span 3;
+}
+
+.serial-actions {
+    align-items: end;
+    display: grid;
+    gap: 0.85rem;
+    grid-template-columns: 1fr 220px auto;
+}
+
+@media (max-width: 1199.98px) {
+
+    .filter-grid,
+    .form-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .form-grid .wide {
+        grid-column: span 2;
+    }
+}
+
+.error-text {
+    color: #ef4444;
+    font-size: 13px;
+    margin-top: 4px;
+    display: block;
+    font-weight: 500;
+}
+
+@media (max-width: 767.98px) {
+
+    .filter-grid,
+    .form-grid,
+    .serial-actions {
+        grid-template-columns: 1fr;
+    }
+
+    .form-grid .wide {
+        grid-column: span 1;
+    }
+
+    .filter-actions {
+        flex-wrap: wrap;
+    }
+
+    :host ::ng-deep .table-panel .p-paginator {
+        justify-content: flex-start;
+        overflow-x: auto;
+        padding: 0.6rem 0.85rem;
+    }
+
+    .empty-table {
+        min-height: 6rem;
+    }
+}
+
+.global-loader {
+    position: fixed;
+    inset: 0;
+    background: rgba(255, 255, 255, .6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 99999;
+}

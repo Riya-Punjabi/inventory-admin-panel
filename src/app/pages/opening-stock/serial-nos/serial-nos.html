@@ -1,0 +1,147 @@
+<div class="page-stack">
+    <div class="d-flex flex-wrap justify-content-between align-items-center gap-2">
+        <div>
+            <h1 class="page-title">
+                Serial Numbers
+            </h1>
+            <p class="muted mb-0">
+                Parent #{{ parentSrno }}
+            </p>
+        </div>
+
+        <div class="d-flex gap-2">
+            <a pButton severity="secondary" outlined routerLink="/admin/opening-stock" class="text-decoration-none">
+                <i class="pi pi-arrow-left me-2"></i>
+                Back
+            </a>
+
+            <button pButton type="button" (click)="openNew()">
+                <i class="pi pi-plus me-2"></i>
+                Add Serial
+            </button>
+        </div>
+    </div>
+    @if (error) {
+    <div class="alert alert-warning mb-0">
+        {{ error }}
+    </div>
+    }
+
+    <form class="section-panel serial-actions" [formGroup]="filterForm" (ngSubmit)="load()">
+        <div>
+            <label class="form-label">
+                Search
+            </label>
+            <input type="text" pInputText formControlName="searchString" />
+        </div>
+        <div>
+            <label class="form-label">
+                Status
+            </label>
+            <p-select formControlName="status" [options]="statusOptions" optionLabel="label" optionValue="value" />
+        </div>
+
+        <button pButton type="submit">
+            <i class="pi pi-search me-2"></i>
+            Search
+        </button>
+    </form>
+    <section class="section-panel p-0 overflow-hidden">
+        <p-table [value]="records" [paginator]="true" [rows]="10" responsiveLayout="scroll" [tableStyle]="{
+                'min-width': '760px'
+            }">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th>Srno</th>
+                    <th>Serial No 1</th>
+                    <th>Serial No 2</th>
+                    <th>Status</th>
+                    <th>Qty</th>
+                    <th class="text-end">
+                        Action
+                    </th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-row>
+                <tr>
+                    <td>
+                        {{ row.srno }}
+                    </td>
+                    <td>
+                        {{ row.serial_no1 || '-' }}
+                    </td>
+                    <td>
+                        {{ row.serial_no2 || '-' }}
+                    </td>
+                    <td>
+                        {{ statusName(row.status) }}
+                    </td>
+                    <td>
+                        {{ row.qty || 1 }}
+                    </td>
+                    <td class="text-end">
+                        <button pButton type="button" size="small" severity="secondary" outlined
+                            (click)="openEdit(row)">
+                            <i class="pi pi-pencil"></i>
+                        </button>
+                    </td>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="emptymessage">
+                <tr>
+                    <td colspan="6" class="text-center py-4">
+                        No serial numbers found
+                    </td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </section>
+</div>
+
+<p-dialog [visible]="dialogVisible" (visibleChange)="dialogVisible = $event" [modal]="true" [style]="{
+        width: 'min(560px, 96vw)'
+    }" header="Serial Number">
+    <form [formGroup]="form" class="page-stack" (ngSubmit)="save()">
+        <div>
+            <label class="form-label">
+                Status
+            </label>
+            <p-select formControlName="status" [options]="dialogStatusOptions" optionLabel="label"
+                optionValue="value" />
+        </div>
+        <div>
+            <label class="form-label">
+                Serial No 1
+            </label>
+            <input type="text" pInputText formControlName="serial_no1" />
+        </div>
+        <div>
+            <label class="form-label">
+                Serial No 2
+            </label>
+            <input type="text" pInputText formControlName="serial_no2" />
+        </div>
+        <div>
+            <label class="form-label">
+                Qty
+            </label>
+            <p-inputNumber formControlName="qty" [min]="0" />
+        </div>
+        <div>
+            <label class="form-label">
+                Serial Image
+            </label>
+            <input class="form-control" type="file" accept="image/*" (change)="handleFile($event)" />
+        </div>
+        <div class="d-flex justify-content-end gap-2">
+            <button pButton type="button" severity="secondary" outlined (click)="dialogVisible = false">
+                <i class="pi pi-times me-2"></i>
+                Cancel
+            </button>
+            <button pButton type="submit" [loading]="saving" [disabled]="form.invalid">
+                <i class="pi pi-save me-2"></i>
+                Save
+            </button>
+        </div>
+    </form>
+</p-dialog>

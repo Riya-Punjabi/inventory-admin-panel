@@ -1,0 +1,174 @@
+<form class="page-stack" [formGroup]="form" (ngSubmit)="save()">
+    <div class="d-flex flex-wrap align-items-center justify-content-between gap-2">
+        <div>
+            <h1 class="page-title">{{ editSrno ? 'Edit Stock' : 'New Stock' }}</h1>
+        </div>
+        <a pButton severity="secondary" outlined routerLink="/admin/opening-stock" class="text-decoration-none">
+            <i class="pi pi-arrow-left me-2"></i>
+            Back
+        </a>
+    </div>
+
+    <section class="section-panel">
+        <h2 class="h6 mb-3">Product</h2>
+        <div class="form-grid">
+            <div>
+                <label class="form-label" for="product_name">Product Name</label>
+                <p-autocomplete inputId="product_name" formControlName="product_name"
+                    [suggestions]="suggestions.product_name" [dropdown]="true"
+                    (completeMethod)="complete('product_name', $event)" />
+            </div>
+            <div>
+                <label class="form-label" for="part_name">Part Name</label>
+                <p-autocomplete inputId="part_name" formControlName="part_name" [suggestions]="suggestions.part_name"
+                    [dropdown]="true" (completeMethod)="complete('part_name', $event)" />
+            </div>
+            <div>
+                <label class="form-label" for="model_no">Model No</label>
+                <p-autocomplete inputId="model_no" formControlName="model_no" [suggestions]="suggestions.model_no"
+                    [dropdown]="true" (completeMethod)="complete('model_no', $event)" />
+            </div>
+            <div>
+                <label class="form-label" for="barcode">Barcode</label>
+                <input id="barcode" type="text" pInputText formControlName="barcode" />
+            </div>
+            <div>
+                <label class="form-label" for="serial_no1">Serial No 1</label>
+                <input id="serial_no1" type="text" pInputText formControlName="serial_no1" />
+            </div>
+            <div>
+                <label class="form-label" for="serial_no2">Serial No 2</label>
+                <input id="serial_no2" type="text" pInputText formControlName="serial_no2" />
+            </div>
+        </div>
+    </section>
+
+    <section class="section-panel">
+        <h2 class="h6 mb-3">Purchase</h2>
+        <div class="form-grid">
+            <div>
+                <label class="form-label" for="purchase_date">Purchase Date</label>
+                <p-datepicker inputId="purchase_date" formControlName="purchase_date" dateFormat="yy-mm-dd"
+                    [showIcon]="true" />
+            </div>
+            <div>
+                <label class="form-label" for="purchase_ref_no">Bill No</label>
+                <input id="purchase_ref_no" type="text" pInputText formControlName="purchase_ref_no" />
+            </div>
+            <div>
+                <label class="form-label" for="supplier">Supplier</label>
+                <p-autocomplete inputId="supplier" formControlName="supplier" [suggestions]="suggestions.supplier"
+                    [dropdown]="true" (completeMethod)="complete('supplier', $event)" />
+            </div>
+            <div>
+                <label class="form-label" for="qty">Qty</label>
+                <p-inputNumber inputId="qty" formControlName="qty" [min]="0" />
+            </div>
+            <div>
+                <label class="form-label" for="mrp">MRP</label>
+                <p-inputNumber inputId="mrp" formControlName="mrp" mode="decimal" [minFractionDigits]="0"
+                    [maxFractionDigits]="2" />
+            </div>
+            <div>
+                <label class="form-label" for="purchase_rate">Purchase Rate</label>
+                <p-inputNumber inputId="purchase_rate" formControlName="purchase_rate" mode="decimal"
+                    [minFractionDigits]="0" [maxFractionDigits]="2" />
+            </div>
+        </div>
+    </section>
+
+    <section class="section-panel">
+        <h2 class="h6 mb-3">Classification</h2>
+        <div class="form-grid">
+            <div>
+                <label class="form-label" for="status">Status</label>
+                <p-select inputId="status" formControlName="status" [options]="statusOptions()" optionLabel="label"
+                    optionValue="value" />
+            </div>
+            <div>
+                <label class="form-label" for="is_product_spare">Product Spare</label>
+                <p-select inputId="is_product_spare" formControlName="is_product_spare" [options]="spareOptions"
+                    optionLabel="label" optionValue="value" />
+            </div>
+            <div>
+                <label class="form-label" for="mfg_date">MFG Date</label>
+                <p-datepicker inputId="mfg_date" formControlName="mfg_date" dateFormat="yy-mm-dd" [showIcon]="true" />
+            </div>
+            <div>
+                <label class="form-label" for="location">Location</label>
+                <p-autocomplete inputId="location" formControlName="location" [suggestions]="suggestions.location"
+                    [dropdown]="true" (completeMethod)="complete('location', $event)" />
+            </div>
+            <div>
+                <label class="form-label" for="sub_location">Sub Location</label>
+                <p-autocomplete inputId="sub_location" formControlName="sub_location"
+                    [suggestions]="suggestions.sub_location" [dropdown]="true"
+                    (completeMethod)="complete('sub_location', $event)" />
+            </div>
+            <div>
+                <label class="form-label" for="company">Company</label>
+                <p-autocomplete inputId="company" formControlName="company" [suggestions]="suggestions.company"
+                    [dropdown]="true" (completeMethod)="complete('company', $event)" />
+            </div>
+            <div>
+                <label class="form-label" for="product_category">Product Category</label>
+                <p-autocomplete inputId="product_category" formControlName="product_category"
+                    [suggestions]="suggestions.product_category" [dropdown]="true"
+                    (completeMethod)="complete('product_category', $event)" />
+            </div>
+            <div>
+                <label class="form-label" for="product_type">Product Type</label>
+                <p-autocomplete inputId="product_type" formControlName="product_type"
+                    [suggestions]="suggestions.product_type" [dropdown]="true"
+                    (completeMethod)="complete('product_type', $event)" />
+            </div>
+            <div>
+                <label class="form-label" for="pcondition">Condition</label>
+                <input id="pcondition" type="text" pInputText formControlName="pcondition" />
+            </div>
+        </div>
+    </section>
+
+    <section class="section-panel">
+        <h2 class="h6 mb-3">Images and Notes</h2>
+        <div class="form-grid">
+            <div>
+                <label class="form-label" for="product_img">Product Image</label>
+                <input id="product_img" class="form-control" type="file" accept="image/*"
+                    (change)="handleFile($event, 'product_img', 'product_imgBase64')" />
+
+                @if(form.value.product_img){
+                <small class="text-primary d-block mt-1">
+                    Current File: {{ form.value.product_img }}
+                </small>
+                }
+            </div>
+
+            <div>
+                <label class="form-label" for="purchase_img">Purchase Image</label>
+                <input id="purchase_img" class="form-control" type="file" accept="image/*"
+                    (change)="handleFile($event, 'purchase_img', 'purchase_imgBase64')" />
+
+                @if(form.value.purchase_img){
+                <small class="text-primary d-block mt-1">
+                    Current File: {{ form.value.purchase_img }}
+                </small>
+                }
+            </div>
+
+            <div class="wide">
+                <label class="form-label" for="note">Note</label>
+                <textarea id="note" pTextarea rows="3" formControlName="note"></textarea>
+            </div>
+        </div>
+    </section>
+
+    <div class="d-flex flex-wrap justify-content-end gap-2">
+        <a pButton severity="secondary" outlined routerLink="/admin/opening-stock"
+            class="text-decoration-none">Cancel</a>
+        <button pButton type="submit" [disabled]="form.invalid || loading">
+            <i class="pi pi-save me-2"></i>
+            Save
+        </button>
+    </div>
+</form>

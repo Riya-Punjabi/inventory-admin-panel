@@ -1,0 +1,16 @@
+<header class="app-header">
+
+    <div class="header-copy">
+        <strong>
+            {{ profile?.login_name || 'User' }}
+            ·
+            {{ profile?.role_name || 'Admin' }}
+        </strong>
+    </div>
+
+    <button pButton type="button" severity="danger" size="small" outlined (click)="logout()">
+        <i class="pi pi-sign-out me-2"></i>
+        Logout
+    </button>
+
+</header>

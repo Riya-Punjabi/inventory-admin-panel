@@ -1,0 +1,76 @@
+<div class="p-2">
+    <form class="container mt-5" [formGroup]="loginForm">
+        <div class="row justify-content-center">
+            <div class="col-md-6 col-lg-4">
+                <div class="card p-4 shadow-sm">
+                    <h3 class="text-center mb-4">Login</h3>
+
+                    <div class="mb-2">
+                        <label class="form-label" for="viplcode">
+                            Code
+                            <i class="pi pi-question-circle text-primary me-1" pTooltip="use this: 9803"
+                                tooltipPosition="top"></i>
+                        </label>
+                        <input id="viplcode" type="text" pInputText formControlName="viplcode"
+                            placeholder="Enter Vipl Code" [class.ng-invalid]="loginForm.get('viplcode')?.invalid &&
+                            loginForm.get('viplcode')?.touched"
+                            [class.ng-dirty]="loginForm.get('viplcode')?.touched" />
+
+                        @if (this.loginForm.get('viplcode')?.errors?.['required'] &&
+                        this.loginForm.get('viplcode')?.touched) {
+                        <small class="error-text">
+                            VIPLCode IS Required.
+                        </small>
+                        }
+
+                    </div>
+
+                    <div class="mb-2">
+                        <label class="form-label" for="username">
+                            UserName
+                            <i class="pi pi-question-circle text-primary me-1" pTooltip="use this: 9810000003"
+                                tooltipPosition="top"></i>
+                        </label>
+                        <input id="username" type="text" pInputText formControlName="username"
+                            placeholder="Enter UserName" [class.ng-invalid]="loginForm.get('username')?.invalid &&
+                            loginForm.get('username')?.touched"
+                            [class.ng-dirty]="loginForm.get('username')?.touched" />
+
+                        @if (this.loginForm.get('username')?.errors?.['required'] &&
+                        this.loginForm.get('username')?.touched) {
+                        <small class="error-text">
+                            UserName IS Required.
+                        </small>
+                        }
+                    </div>
+
+                    <div class="form-group mb-4">
+                        <label class="form-label" for="password">
+                            Password
+                            <i class="pi pi-question-circle text-primary me-1" pTooltip="use this: 1003"
+                                tooltipPosition="top"></i></label>
+
+                        <p-password inputId="password" formControlName="password" [feedback]="false" [toggleMask]="true"
+                            placeholder="****" [class.ng-invalid]="loginForm.get('password')?.invalid &&
+                            loginForm.get('password')?.touched"
+                            [class.ng-dirty]="loginForm.get('password')?.touched" />
+
+                        @if (this.loginForm.get('password')?.errors?.['required'] &&
+                        this.loginForm.get('password')?.touched) {
+                        <small class="error-text">
+                            PassWord IS Required.
+                        </small>
+                        }
+                    </div>
+
+                    <div class="text-center">
+
+                        <button pButton type="submit" class="w-100" [disabled]="loginForm.invalid" (click)="login()">
+                            Sign in
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

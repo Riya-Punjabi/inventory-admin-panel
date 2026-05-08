@@ -1,0 +1,56 @@
+<div class="page-stack">
+    <div>
+        <h1 class="page-title">
+            Dashboard
+        </h1>
+
+        <p class="muted">
+            Stock Overview
+        </p>
+    </div>
+    <div class="dashboard-grid">
+        <div class="dashboard-card cursor-pointer" routerLink="/admin/opening-stock">
+            <div class="card-icon green">
+                <i class="pi pi-box"></i>
+            </div>
+            <div>
+                <h2>{{ openingStockCount }}</h2>
+                <p>Opening Stocks</p>
+            </div>
+        </div>
+        <div class="dashboard-card cursor-pointer" routerLink="/admin/opening-stock">
+            <div class="card-icon blue">
+                <i class="pi pi-barcode"></i>
+            </div>
+            <div>
+                <h2>{{ serialCount }}</h2>
+                <p>Serial Numbers</p>
+            </div>
+        </div>
+    </div>
+    <section class="section-panel">
+        <div class="d-flex justify-content-between mb-3">
+            <h3>
+                Recent Opening Stocks
+            </h3>
+        </div>
+        <p-table [value]="recentStocks" responsiveLayout="scroll">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th>Product</th>
+                    <th>Model</th>
+                    <th>Qty</th>
+                    <th>Location</th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-row>
+                <tr>
+                    <td>{{ row.product_name }}</td>
+                    <td>{{ row.model_no }}</td>
+                    <td>{{ row.qty }}</td>
+                    <td>{{ row.location }}</td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </section>
+</div>

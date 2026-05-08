@@ -1,0 +1,83 @@
+.sidebar {
+    width: 260px;
+    height: 100vh;
+    background-color: #1e293b;
+    color: #ffffff;
+    padding: 20px 15px;
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    left: 0;
+    top: 0;
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding-bottom: 20px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.brand-mark {
+    width: 42px;
+    height: 42px;
+    border-radius: 10px;
+    background-color: #22c55e;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    font-weight: bold;
+    color: white;
+}
+
+.brand strong {
+    font-size: 16px;
+    font-weight: 600;
+    color: #fff;
+}
+
+
+.nav-list {
+    display: grid;
+    gap: 0.35rem;
+    margin-top: 0.5rem;
+}
+
+.nav-list a {
+    align-items: center;
+    border-radius: 8px;
+    color: #dce4ef;
+    display: flex;
+    gap: 0.7rem;
+    padding: 0.78rem 0.85rem;
+    text-decoration: none;
+    transition: background-color 160ms ease, color 160ms ease;
+}
+
+.nav-list a:hover,
+.nav-list a.active {
+    background: rgba(34, 197, 94, 0.14);
+    color: #ffffff;
+}
+
+.nav-list a.active {
+    border-left: 3px solid var(--app-sidebar-active);
+}
+
+@media (max-width: 768px) {
+    .sidebar {
+        width: 220px;
+    }
+
+    .brand strong {
+        font-size: 14px;
+    }
+
+    .nav-list a {
+        font-size: 14px;
+    }
+}

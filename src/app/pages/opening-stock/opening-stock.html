@@ -1,0 +1,209 @@
+<div class="page-stack">
+    <div class="d-flex flex-wrap justify-content-between align-items-center gap-2">
+        <div>
+            <h1 class="page-title">
+                Opening Stock
+            </h1>
+        </div>
+
+        <a pButton routerLink="/admin/opening-stock/new" class="text-decoration-none">
+            <i class="pi pi-plus me-2"></i>
+            New Stock
+        </a>
+    </div>
+
+    <form [formGroup]="filters" class="section-panel filter-grid" (ngSubmit)="search()">
+        <div>
+            <label class="form-label">
+                From
+            </label>
+            <p-datepicker formControlName="from" dateFormat="yy-mm-dd" [showIcon]="true" />
+
+        </div>
+        <div>
+            <label class="form-label">
+                To
+            </label>
+            <p-datepicker formControlName="to" dateFormat="yy-mm-dd" [showIcon]="true" />
+        </div>
+
+        <div>
+            <label class="form-label">
+                Product
+            </label>
+            <p-autoComplete formControlName="productName" [suggestions]="suggestions.productName"
+                (completeMethod)="complete('productName', $event)" [dropdown]="true" [showClear]="true"
+                styleClass="w-100" inputStyleClass="w-100" />
+        </div>
+
+        <div>
+            <label class="form-label">
+                Supplier
+            </label>
+            <p-autoComplete formControlName="supplier" [suggestions]="suggestions.supplier"
+                (completeMethod)="complete('supplier', $event)" [dropdown]="true" [showClear]="true" styleClass="w-100"
+                inputStyleClass="w-100" />
+
+        </div>
+
+        <div>
+            <label class="form-label">
+                Location
+            </label>
+            <p-autoComplete formControlName="location" [suggestions]="suggestions.location"
+                (completeMethod)="complete('location', $event)" [dropdown]="true" [showClear]="true" styleClass="w-100"
+                inputStyleClass="w-100" />
+
+        </div>
+        <div>
+            <label class="form-label">
+                Model
+            </label>
+            <p-autoComplete formControlName="modelNo" [suggestions]="suggestions.modelNo"
+                (completeMethod)="complete('modelNo', $event)" [dropdown]="true" [showClear]="true" styleClass="w-100"
+                inputStyleClass="w-100" />
+        </div>
+        <div>
+            <label class="form-label">
+                Spare
+            </label>
+            <p-select formControlName="spare" [options]="spareOptions" optionLabel="label" optionValue="value" />
+
+        </div>
+        <div class="filter-actions">
+            <button pButton type="submit">
+                <i class="pi pi-search me-2"></i>
+                Search
+            </button>
+
+            <button pButton type="button" severity="secondary" outlined (click)="reset()">
+                <i class="pi pi-refresh me-2"></i>
+                Reset
+            </button>
+        </div>
+
+    </form>
+
+    @if (error) {
+    <div class="alert alert-danger mb-0">
+        {{ error }}
+    </div>
+    }
+
+    <section class="section-panel table-panel p-0 overflow-hidden">
+        @if (records.length) {
+        <p-table [value]="records" [paginator]="true" [rows]="pageSize" [first]="first" [totalRecords]="totalRecords"
+            [lazy]="true" (onPage)="pageChanged($event)" responsiveLayout="scroll" dataKey="srno"
+            [tableStyle]="{ 'min-width': '980px' }">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th>Srno</th>
+                    <th>Product</th>
+                    <th>Supplier</th>
+                    <th>Location</th>
+                    <th>Model</th>
+                    <th>Qty</th>
+                    <th>Spare</th>
+                    <th>Status</th>
+                    <th>Date</th>
+                    <th class="text-end">
+                        Action
+                    </th>
+                </tr>
+            </ng-template>
+
+            <ng-template pTemplate="body" let-row>
+                <tr>
+                    <td>{{ row.srno }}</td>
+                    <td>
+                        <strong>
+                            {{ row.product_name || '-' }}
+                        </strong>
+                        <div class="muted small">
+                            {{row.product_category || row.product_type || '-' }}
+                        </div>
+                    </td>
+                    <td>
+                        {{ row.supplier || '-' }}
+                    </td>
+                    <td>
+                        {{ row.location || row.sub_location || '-' }}
+                    </td>
+                    <td>
+                        {{ row.model_no || '-' }}
+                    </td>
+                    <td>
+                        {{ row.qty || 0 }}
+                    </td>
+                    <td>
+                        <span class="status-pill">
+                            {{ spareLabel( row.is_product_spare)}}
+                        </span>
+                    </td>
+                    <td>
+                        {{ statusName(row.status) }}
+                    </td>
+                    <td>
+                        {{
+                        row.purchase_date
+                        | date:'yyyy-MM-dd'
+                        }}
+                    </td>
+
+                    <td>
+                        <div class="d-flex justify-content-end gap-2">
+                            <a pButton size="small" severity="secondary" outlined [routerLink]="[
+                                        '/admin/opening-stock',
+                                        row.srno,
+                                        'edit'
+                                    ]">
+                                <i class="pi pi-pencil"></i>
+                            </a>
+
+                            <a pButton size="small" outlined class="text-decoration-none serial-button" [routerLink]="[
+                                        '/admin/opening-stock',
+                                        row.srno,
+                                        'serial-nos'
+                                    ]">
+                                <i class="pi pi-barcode me-1"></i>
+                                Serial
+                            </a>
+
+                            <button pButton type="button" size="small" severity="danger" icon="pi pi-trash"
+                                (click)="confirmDelete(row.srno)">
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="paginatorleft">
+                <span class="table-total">
+                    {{ totalRecords }} records
+                </span>
+            </ng-template>
+
+            <ng-template pTemplate="paginatorright">
+                <div class="rows-control">
+                    <label>
+                        Rows
+                    </label>
+                    <select [value]="pageSize" (change)="pageSizeChanged($event)">
+                        @for (size of pageSizeOptions;track size) {
+                        <option [value]="size">
+                            {{ size }}
+                        </option>
+                        }
+                    </select>
+                </div>
+            </ng-template>
+        </p-table>
+        } @else {
+        <div class="empty-table">
+            <i class="pi pi-inbox"></i>
+            <span>
+                No opening stock found
+            </span>
+        </div>
+        }
+    </section>
+</div>
